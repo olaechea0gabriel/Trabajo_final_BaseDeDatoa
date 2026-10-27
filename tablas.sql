@@ -192,3 +192,43 @@ CREATE TABLE DETALLE_RECETA (
     CONSTRAINT fk_detalle_medicamento FOREIGN KEY (id_medicamento)
         REFERENCES MEDICAMENTO (id_medicamento)
 );
+
+-- ----------------------------------------------------------------------------
+-- MÓDULO 4: FACTURACIÓN Y PAGOS
+-- ----------------------------------------------------------------------------
+
+-- 14. Tabla COMPROBANTE 
+CREATE TABLE COMPROBANTE (
+    id_comprobante INTEGER        NOT NULL,
+    serie_numero   VARCHAR(30)    NOT NULL,
+    fcha_emision   DATE           NOT NULL,
+    monto_total    NUMERIC(10, 2) NOT NULL,
+    id_consulta    INTEGER        NOT NULL,
+    CONSTRAINT pk_comprobante PRIMARY KEY (id_comprobante),
+    CONSTRAINT uq_comprobante_serie UNIQUE (serie_numero),
+    CONSTRAINT uq_comprobante_consulta UNIQUE (id_consulta),
+    CONSTRAINT fk_comprobante_consulta FOREIGN KEY (id_consulta)
+        REFERENCES CONSULTA (id_consulta)
+);
+
+-- 15. Tabla FORMA_PAGO 
+CREATE TABLE FORMA_PAGO (
+    id_forma_pago INTEGER      NOT NULL,
+    nombre_forma  VARCHAR(60)  NOT NULL,
+    CONSTRAINT pk_forma_pago PRIMARY KEY (id_forma_pago)
+);
+
+-- 16. Tabla PAGO 
+CREATE TABLE PAGO (
+    id_pago        INTEGER        NOT NULL,
+    fcha_pago      DATE           NOT NULL,
+    monto_abonado  NUMERIC(10, 2) NOT NULL,
+    num_operacion  VARCHAR(50),
+    id_comprobante INTEGER        NOT NULL,
+    id_forma_pago  INTEGER        NOT NULL,
+    CONSTRAINT pk_pago PRIMARY KEY (id_pago),
+    CONSTRAINT fk_pago_comprobante FOREIGN KEY (id_comprobante)
+        REFERENCES COMPROBANTE (id_comprobante),
+    CONSTRAINT fk_pago_forma_pago FOREIGN KEY (id_forma_pago)
+        REFERENCES FORMA_PAGO (id_forma_pago)
+);
