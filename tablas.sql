@@ -74,4 +74,70 @@ CREATE TABLE ANTECEDENTE (
     CONSTRAINT fk_antecedente_tipo FOREIGN KEY (id_tipo_antecedente)
         REFERENCES TIPO_ANTECEDENTE (id_tipo_antecedente)
 );
+/*
+-- ----------------------------------------------------------------------------
+-- MÓDULO 2: GESTIÓN DE CITAS Y ATENCIÓN MÉDICA
+-- ----------------------------------------------------------------------------
+*/
+
+-- 5. Tabla ESPECIALIDAD 
+CREATE TABLE ESPECIALIDAD (
+    id_especialidad INTEGER       NOT NULL,
+    nombre_esp      VARCHAR(100)  NOT NULL,
+    CONSTRAINT pk_especialidad PRIMARY KEY (id_especialidad)
+);
+
+-- 6. Tabla PSIQUIATRA 
+CREATE TABLE PSIQUIATRA (
+    id_psiquiatra        INTEGER       NOT NULL,
+    cmp                  VARCHAR(20)   NOT NULL,
+    nombres              VARCHAR(100)  NOT NULL,
+    apellidos            VARCHAR(100)  NOT NULL,
+    telefono             VARCHAR(20)   NOT NULL,
+    correo_institucional VARCHAR(120),
+    id_especialidad      INTEGER       NOT NULL,
+    CONSTRAINT pk_psiquiatra PRIMARY KEY (id_psiquiatra),
+    CONSTRAINT uq_psiquiatra_cmp UNIQUE (cmp),
+    CONSTRAINT fk_psiquiatra_especialidad FOREIGN KEY (id_especialidad)
+        REFERENCES ESPECIALIDAD (id_especialidad)
+);
+
+-- 7. Tabla ESTADO_CITA 
+CREATE TABLE ESTADO_CITA (
+    id_estado     INTEGER      NOT NULL,
+    nombre_estado VARCHAR(50)  NOT NULL,
+    CONSTRAINT pk_estado_cita PRIMARY KEY (id_estado)
+);
+
+-- 8. Tabla CITA 
+CREATE TABLE CITA (
+    id_cita        INTEGER       NOT NULL,
+    fcha_cita      DATE          NOT NULL,
+    hora_cita      VARCHAR(10)   NOT NULL,
+    motivo_reserva VARCHAR(300),
+    id_paciente    INTEGER       NOT NULL,
+    id_psiquiatra  INTEGER       NOT NULL,
+    id_estado      INTEGER       NOT NULL,
+    CONSTRAINT pk_cita PRIMARY KEY (id_cita),
+    CONSTRAINT fk_cita_paciente FOREIGN KEY (id_paciente)
+        REFERENCES PACIENTE (id_paciente),
+    CONSTRAINT fk_cita_psiquiatra FOREIGN KEY (id_psiquiatra)
+        REFERENCES PSIQUIATRA (id_psiquiatra),
+    CONSTRAINT fk_cita_estado FOREIGN KEY (id_estado)
+        REFERENCES ESTADO_CITA (id_estado)
+);
+
+-- 9. Tabla CONSULTA 
+CREATE TABLE CONSULTA (
+    id_consulta      INTEGER        NOT NULL,
+    fcha_consulta    DATE           NOT NULL,
+    motivo_atencion  VARCHAR(300)   NOT NULL,
+    diagnostico_ppal VARCHAR(300)   NOT NULL,
+    nota_evolucion   VARCHAR(1000)  NOT NULL,
+    id_cita          INTEGER        NOT NULL,
+    CONSTRAINT pk_consulta PRIMARY KEY (id_consulta),
+    CONSTRAINT uq_consulta_cita UNIQUE (id_cita),
+    CONSTRAINT fk_consulta_cita FOREIGN KEY (id_cita)
+        REFERENCES CITA (id_cita)
+);
 
