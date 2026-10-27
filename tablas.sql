@@ -141,3 +141,54 @@ CREATE TABLE CONSULTA (
         REFERENCES CITA (id_cita)
 );
 
+-- ----------------------------------------------------------------------------
+-- MÓDULO 3: PRESCRIPCIÓN Y FARMACOTERAPIA
+-- ----------------------------------------------------------------------------
+
+-- 10. Tabla PRESENTACION 
+CREATE TABLE PRESENTACION (
+    id_presentacion   INTEGER       NOT NULL,
+    descripcion_forma VARCHAR(100)  NOT NULL,
+    CONSTRAINT pk_presentacion PRIMARY KEY (id_presentacion)
+);
+
+-- 11. Tabla MEDICAMENTO 
+CREATE TABLE MEDICAMENTO (
+    id_medicamento   INTEGER       NOT NULL,
+    nombre_comercial VARCHAR(120)  NOT NULL,
+    principio_activo VARCHAR(120)  NOT NULL,
+    concentracion    VARCHAR(60)   NOT NULL,
+    id_presentacion  INTEGER       NOT NULL,
+    CONSTRAINT pk_medicamento PRIMARY KEY (id_medicamento),
+    CONSTRAINT fk_medicamento_presentacion FOREIGN KEY (id_presentacion)
+        REFERENCES PRESENTACION (id_presentacion)
+);
+
+-- 12. Tabla RECETA 
+CREATE TABLE RECETA (
+    id_receta     INTEGER      NOT NULL,
+    num_receta    VARCHAR(30)  NOT NULL,
+    fcha_emision  DATE         NOT NULL,
+    vigencia_dias INTEGER      NOT NULL,
+    id_consulta   INTEGER      NOT NULL,
+    CONSTRAINT pk_receta PRIMARY KEY (id_receta),
+    CONSTRAINT uq_receta_numero UNIQUE (num_receta),
+    CONSTRAINT fk_receta_consulta FOREIGN KEY (id_consulta)
+        REFERENCES CONSULTA (id_consulta)
+);
+
+-- 13. Tabla DETALLE_RECETA 
+CREATE TABLE DETALLE_RECETA (
+    id_detalle           INTEGER       NOT NULL,
+    dosis                VARCHAR(100)  NOT NULL,
+    frecuencia_hrs       INTEGER       NOT NULL,
+    duracion_dias        INTEGER       NOT NULL,
+    indicacion_adicional VARCHAR(300),
+    id_receta            INTEGER       NOT NULL,
+    id_medicamento       INTEGER       NOT NULL,
+    CONSTRAINT pk_detalle_receta PRIMARY KEY (id_detalle),
+    CONSTRAINT fk_detalle_receta FOREIGN KEY (id_receta)
+        REFERENCES RECETA (id_receta),
+    CONSTRAINT fk_detalle_medicamento FOREIGN KEY (id_medicamento)
+        REFERENCES MEDICAMENTO (id_medicamento)
+);
