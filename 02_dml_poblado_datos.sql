@@ -112,9 +112,16 @@ SET correo_institucional = 'roberto.mendoza@redpsiquiatrica.pe'
 WHERE cmp = 'CMP-45821';
 
 -- 4. Tabla CITA: 
+
 UPDATE CITA
 SET 
     fcha_cita = '2026-10-25',
     hora_cita = '15:00',
     id_estado = 2 
 WHERE id_cita = 1;
+
+-- 5. Tabla COMPROBANTE:
+
+UPDATE COMPROBANTE
+SET monto_total = 160.00
+WHERE serie_numero = 'B001-000101';
