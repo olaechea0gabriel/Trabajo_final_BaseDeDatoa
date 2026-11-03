@@ -110,3 +110,11 @@ WHERE num_expediente = 'EXP-2026-001';
 UPDATE PSIQUIATRA
 SET correo_institucional = 'roberto.mendoza@redpsiquiatrica.pe'
 WHERE cmp = 'CMP-45821';
+
+-- 4. Tabla CITA: 
+UPDATE CITA
+SET 
+    fcha_cita = '2026-10-25',
+    hora_cita = '15:00',
+    id_estado = 2 
+WHERE id_cita = 1;
