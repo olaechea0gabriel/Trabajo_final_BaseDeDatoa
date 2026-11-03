@@ -99,3 +99,14 @@ SET
     correo_electronico = 'marco.valdivia@email.com'
 WHERE id_paciente = 2;
 
+-- 2. Tabla HISTORIA_CLINICA:
+
+UPDATE HISTORIA_CLINICA
+SET observacion_gral = 'Se adjuntan resultados de perfil tiroideo; paciente responde favorablemente al tratamiento inicial.'
+WHERE num_expediente = 'EXP-2026-001';
+
+-- 3. Tabla PSIQUIATRA: 
+
+UPDATE PSIQUIATRA
+SET correo_institucional = 'roberto.mendoza@redpsiquiatrica.pe'
+WHERE cmp = 'CMP-45821';
