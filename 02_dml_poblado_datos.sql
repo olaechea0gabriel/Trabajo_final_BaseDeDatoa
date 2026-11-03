@@ -91,5 +91,11 @@ VALUES
 
 -- PARTE 4: CONSULTAS DE MODIFICACIÓN (UPDATE)
 
+-- 1. Tabla PACIENTE:
 
+UPDATE PACIENTE
+SET 
+    telefono = '959998877',
+    correo_electronico = 'marco.valdivia@email.com'
+WHERE id_paciente = 2;
 
