@@ -43,3 +43,46 @@ VALUES
 -------------------------------------------------------------------------------
 --1 update por estudiante
 
+-- ----------------------------------------------------------------------------
+-- TABLA 5: ESTADO_CITA 
+-- ----------------------------------------------------------------------------
+INSERT INTO ESTADO_CITA (id_estado, nombre_estado)
+VALUES 
+    (1, 'Programada'),
+    (2, 'Confirmada'),
+    (3, 'Atendida'),
+    (4, 'Cancelada'),
+    (5, 'Reprogramada');
+
+-- ----------------------------------------------------------------------------
+-- TABLA 6: CITA 
+-- ----------------------------------------------------------------------------
+INSERT INTO CITA (id_cita, fcha_cita, hora_cita, motivo_reserva, id_paciente, id_psiquiatra, id_estado)
+VALUES 
+    (1, '2026-10-10', '09:30', 'Evaluación inicial por cuadro ansioso', 1, 1, 3),
+    (2, '2026-10-12', '16:00', 'Evaluación clínica por insomnio prolongado', 2, 1, 3),
+    (3, '2026-10-15', '11:00', 'Consulta por desgano y fatiga constante', 3, 2, 3),
+    (4, '2026-10-18', '17:30', 'Evaluación por cambios de ánimo severos', 4, 4, 3),
+    (5, '2026-10-20', '08:30', 'Crisis de estrés y sobrecarga laboral', 5, 5, 3);
+
+-- ----------------------------------------------------------------------------
+-- TABLA 7: CONSULTA 
+-- ----------------------------------------------------------------------------
+INSERT INTO CONSULTA (id_consulta, fcha_consulta, motivo_atencion, diagnostico_ppal, nota_evolucion, id_cita)
+VALUES 
+    (1, '2026-10-10', 'Crisis de ansiedad e inquietud constante', 'F41.1 Trastorno de ansiedad generalizada', 'Paciente orientada, se inicia esquema farmacológico y psicoterapia.', 1),
+    (2, '2026-10-12', 'Dificultad severa para conciliar el sueño', 'G47.0 Trastorno de inicio del sueño', 'Se pautan medidas de higiene del sueño y tratamiento nocturno por 30 días.', 2),
+    (3, '2026-10-15', 'Apatía persistente y tristeza no reactiva', 'F32.1 Episodio depresivo moderado', 'Se explican pautas de alerta y se programa reevaluación quincenal.', 3),
+    (4, '2026-10-18', 'Irritabilidad extrema y consumo problemático', 'F10.1 Uso nocivo de sustancias', 'Se coordina abordaje interdisciplinario y monitoreo estrecho.', 4),
+    (5, '2026-10-20', 'Cefalea tensional asociada a sobrecarga', 'F43.2 Trastorno de adaptación con ansiedad', 'Evolución favorable en consulta; se indican técnicas de relajación.', 5);
+
+-- ----------------------------------------------------------------------------
+-- TABLA 8: COMPROBANTE 
+-- ----------------------------------------------------------------------------
+INSERT INTO COMPROBANTE (id_comprobante, serie_numero, fcha_emision, monto_total, id_consulta)
+VALUES 
+    (1, 'B001-000101', '2026-10-10', 180.00, 1),
+    (2, 'B001-000102', '2026-10-12', 180.00, 2),
+    (3, 'B001-000103', '2026-10-15', 200.00, 3),
+    (4, 'B001-000104', '2026-10-18', 220.00, 4),
+    (5, 'B001-000105', '2026-10-20', 190.00, 5);
