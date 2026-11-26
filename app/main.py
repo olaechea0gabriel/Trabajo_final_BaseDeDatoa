@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from app.database import get_connection
-from app.routers import admision, facturacion
+from app.routers import admision, facturacion, reportes
 
 app = FastAPI(
     title="SGI MenteSana - API Consultorio Psiquiátrico",
@@ -10,6 +10,7 @@ app = FastAPI(
 
 app.include_router(admision.router)
 app.include_router(facturacion.router)
+app.include_router(reportes.router)
 
 @app.get("/", tags=["Estado"])
 def verificar_conexion():
