@@ -12,6 +12,24 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./sql/tablas.sql:/docker-entrypoint-initdb.d/01_tablas.sql
+      - ./sql/02_dml_poblado_datos.sql:/docker-entrypoint-initdb.d/02_poblado.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U psiq_final_db -d consultorio_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: .
+    container_name: psiq_ucsp_fastapi
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://psiq_final_db:password123@db:5432/consultorio_db
+    depends_on:
+      db:
+        condition: service_healthy
 
 volumes:
   postgres_data:
